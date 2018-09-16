@@ -6,6 +6,9 @@ RSpec.describe CashMachine, type: :model do
     it { should validate_presence_of :latitude }
     it { should validate_presence_of :longitude }
 
+    it { should validate_numericality_of(:latitude) }
+    it { should validate_numericality_of(:longitude) }
+
     it { should validate_inclusion_of(:latitude).in_range(-90.0 .. 90.0) }
     it { should validate_inclusion_of(:longitude).in_range(-180.0 .. 180.0) }
   end
