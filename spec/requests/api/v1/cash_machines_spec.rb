@@ -22,5 +22,38 @@ RSpec.describe 'Cash Machines API', type: :request do
   end
 
   context "invalid request" do
+    describe 'GET /api/v1/cash_machines/search?lat&long with invalid lat' do
+      before { get "/api/v1/cash_machines/search?lat=200&long=#{location[:long]}" }
+      it 'returns status code 422' do
+        expect(response).to have_http_status(422)
+      end
+
+      it 'returns a failure message' do
+        expect(response.body).to match(/"Must be in -90.0 .. 90.0 range"/)
+      end      
+    end
+
+    describe 'GET /api/v1/cash_machines/search?lat&long with invalid long' do
+      before { get "/api/v1/cash_machines/search?lat=#{location[:lat]}&long=200" }
+      it 'returns status code 422' do
+        expect(response).to have_http_status(422)
+      end
+
+      it 'returns a failure message' do
+        expect(response.body).to match(/"Must be in -180.0 .. 180.0 range"/)
+      end
+    end
+
+    describe 'GET /api/v1/cash_machines/search?bad with wrong query' do
+      before { get "/api/v1/cash_machines/search?bad=query" }
+
+      it 'returns status code 400' do
+        expect(response).to have_http_status(400)
+      end
+
+      it 'returns a failure message' do
+        expect(response.body).to match(/bad/)
+      end
+    end    
   end
 end

@@ -1,6 +1,8 @@
 module Api
   module V1
     class CashMachinesController < ApplicationController
+      before_action :validate_params
+
       def search
         render json: nearest_five_poi
       end
@@ -13,7 +15,15 @@ module Api
 
       def nearest_five_poi
         base_resources.nearest 5, [params['lat'], params['long']] 
-      end      
+      end
+      
+      def validate_params
+        point = ::Point.new(params)
+        if !point.valid?
+          render json: { error: point.errors }, status: :unprocessable_entity and return
+        end
+      end
+
     end
   end
 end
