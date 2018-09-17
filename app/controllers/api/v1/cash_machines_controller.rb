@@ -1,6 +1,6 @@
 module Api
   module V1
-    class CashMachinesController < ApplicationController
+    class CashMachinesController < Api::V1::ApplicationController
       before_action :validate_params
 
       def search
@@ -14,9 +14,9 @@ module Api
       end
 
       def nearest_five_poi
-        base_resources.nearest 5, [params['lat'], params['long']] 
+        base_resources.nearest 5, [params['lat'], params['long']]
       end
-      
+
       def validate_params
         point = ::Point.new(params)
         if !point.valid?
