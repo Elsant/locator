@@ -8,7 +8,8 @@ class CashMachine < ApplicationRecord
   validates_inclusion_of :longitude, in: (-180.0 .. 180.0)
 
   scope :nearest, ->(qty, point) do
-    select("#{table_name}.*")
+    # select(":id, #{table_name}.name #{table_name}.latitude #{table_name}.longitude")
+    select(:id, :name, :latitude, :longitude)
       .select("(#{distance_from_sql(point)}) as distance")
       .order('distance')
       .limit(qty)

@@ -4,7 +4,9 @@ module Api
       before_action :validate_params
 
       def search
-        render json: nearest_five_poi
+        if stale? nearest_five_poi, public: true
+          render json: nearest_five_poi
+        end
       end
 
       private
