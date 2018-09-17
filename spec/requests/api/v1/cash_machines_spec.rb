@@ -30,7 +30,7 @@ RSpec.describe 'Cash Machines API', type: :request do
 
       it 'returns a failure message' do
         expect(response.body).to match(/"Must be in -90.0 .. 90.0 range"/)
-      end      
+      end
     end
 
     describe 'GET /api/v1/cash_machines/search?lat&long with invalid long' do
@@ -54,6 +54,6 @@ RSpec.describe 'Cash Machines API', type: :request do
       it 'returns a failure message' do
         expect(response.body).to match(/bad/)
       end
-    end    
+    end
   end
 end
