@@ -13,6 +13,8 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'geocoder', '~> 1.5'
 gem 'active_model_serializers', '~> 0.10.7'
+gem 'oj', '~> 3.6', '>= 3.6.10'
+gem 'oj_mimic_json', '~> 1.0', '>= 1.0.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

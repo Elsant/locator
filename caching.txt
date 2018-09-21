@@ -1,0 +1,41 @@
+Как кэшировать результаты
+
+Можно сделать так
+#app/controllers/api/v1/cash_machines_controller.rb
+def search
+  if stale? nearest_five_poi, public: true
+    render json: nearest_five_poi
+  end
+end
+
+touch tmp/caching-dev.txt
+
+#config/environments/development.rb
+config.cache_store = :memory_store
+
+### Results with OJ gems
+
+## Without OJ
+#first
+Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (0.96ms)
+Completed 200 OK in 88ms (Views: 17.7ms | ActiveRecord: 55.6ms)
+
+#second
+Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (1.2ms)
+Completed 200 OK in 14ms (Views: 4.4ms | ActiveRecord: 4.5ms)
+
+#304
+Completed 304 Not Modified in 10ms (ActiveRecord: 4.2ms)
+
+## With OJ
+
+#first
+Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (0.49ms)
+Completed 200 OK in 23ms (Views: 9.7ms | ActiveRecord: 5.3ms)
+
+#second
+Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (0.5ms)
+Completed 200 OK in 6ms (Views: 1.8ms | ActiveRecord: 1.4ms)
+
+#304
+304 Not Modified in 4ms (ActiveRecord: 1.2ms)
